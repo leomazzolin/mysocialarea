@@ -132,7 +132,7 @@ class AjaxController extends Zend_Controller_Action
 					$data['subject'] = htmlentities($_POST['subject'], ENT_QUOTES);
 					//$data['message'] = htmlentities($_POST['message-input'], ENT_QUOTES);
 					$data['message'] = $_POST['message-input'];
-					$objContact = new Object_dbObj('contactus');
+					$objContact = new Object_DbObj('contactus');
 					$objContact->_new($data);
 					$this->_helper->FlashMessenger
 							->setNamespace('success')
