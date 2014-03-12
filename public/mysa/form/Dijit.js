@@ -16,8 +16,11 @@ function(declare, lang, on, dom, domConstruct, domAttr, string, JSON,
 		  frm){
 ////
 return declare(null, {
+	
 		fontsize: "14px",
 		type: "text",
+		dijitAttr: new Object(),
+		dijitInfo: new Object(),
 
 	errorInfo: {
 				class: "form/Dijit",
@@ -26,9 +29,12 @@ return declare(null, {
 	constructor: function(jArg){
 		this.eHandle = new myError(this.errorInfo);
 		try{
-			lang.mixin(this, jArg);
-			if(this.field.type != null){
-				this.type = this.field.type;
+			this.dijitAttr = {
+								scrollOnFocus:false,
+							};
+			this.dijitInfo = jArg;
+			if(this.dijitInfo.field.type != null){
+				this.type = this.dijitInfo.field.type;
 			}
 		}
 		catch(e){
@@ -38,151 +44,151 @@ return declare(null, {
 	
 	make: function(td){
 	try{
-		switch(this.general.dijitType)
+		switch(this.dijitInfo.general.dijitType)
 		{
 		case "validation":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 													}, td);
 			var dijit = new ValidationTextBox({
-												id: this.general.id,
-												name: this.general.id,
+												id: this.dijitInfo.general.id,
+												name: this.dijitInfo.general.id,
 												type: this.type,
 												style:"font-size: " + this.fontsize + "; width: 300px;",
-												promptMessage: frm.dijits[this.general.label].prompt,
+												promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 												missingMessage: frm.msgs.missing + frm.msgs.postfix,
 												invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 												scrollOnFocus:false
 											}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 			break;
 		case "currency":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 														}, td);
 			var dijit = new CurrencyTextBox({
-												id: this.general.id,
-												name: this.general.id,
+												id: this.dijitInfo.general.id,
+												name: this.dijitInfo.general.id,
 												type: this.type,
 												style:"font-size: " + this.fontsize + ";",
-												promptMessage: frm.dijits[this.general.label].prompt,
+												promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 												missingMessage: frm.msgs.missing + frm.msgs.postfix,
 												invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 												scrollOnFocus:false
 											}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "date":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 													}, td);
 			var dijit = new DateTextBox({
-											id: this.general.id,
-											name: this.general.id,
+											id: this.dijitInfo.general.id,
+											name: this.dijitInfo.general.id,
 											type: this.type,
 											constraints: { datePattern : 'yyyy-MMM-dd' },
 											style:"font-size: " + this.fontsize + ";",
-											promptMessage: frm.dijits[this.general.label].prompt,
+											promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 											missingMessage: frm.msgs.missing + frm.msgs.postfix,
 											invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 											scrollOnFocus:false
 										}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "spinner":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 													}, td);
 			var dijit = new NumberSpinner({
-											id: this.general.id,
-											name: this.general.id,
+											id: this.dijitInfo.general.id,
+											name: this.dijitInfo.general.id,
 											type: this.type,
 											style:"font-size: " + this.fontsize + ";width: 100px;",
-											promptMessage: frm.dijits[this.general.label].prompt,
+											promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 											missingMessage: frm.msgs.missing + frm.msgs.postfix,
 											invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 											scrollOnFocus:false
 										}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "number":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 														}, td);
 			var dijit = new NumberTextBox({
-											id: this.general.id,
-											name: this.general.id,
+											id: this.dijitInfo.general.id,
+											name: this.dijitInfo.general.id,
 											type: this.type,
 											style:"font-size: " + this.fontsize + ";width: 100px;",
-											promptMessage: frm.dijits[this.general.label].prompt,
+											promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 											missingMessage: frm.msgs.missing + frm.msgs.postfix,
 											invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 											scrollOnFocus:false
 										}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "text":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 														}, td);
 			var dijit = new TextBox({
-										id: this.general.id,
-										name: this.general.id,
+										id: this.dijitInfo.general.id,
+										name: this.dijitInfo.general.id,
 										type: this.type,
 										style:"font-size: " + this.fontsize + ";width: 400px;",
-										promptMessage: frm.dijits[this.general.label].prompt,
+										promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 										missingMessage: frm.msgs.missing + frm.msgs.postfix,
 										invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 										scrollOnFocus:false
 										}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "time":
 			var input = domConstruct.create( "input", {
-														id: this.general.id,
+														id: this.dijitInfo.general.id,
 														}, td);
 			var dijit = new TimeTextBox({
-											id: this.general.id,
-											name: this.general.id,
+											id: this.dijitInfo.general.id,
+											name: this.dijitInfo.general.id,
 											type: this.type,
 											style:"font-size: " + this.fontsize + ";",
-											promptMessage: frm.dijits[this.general.label].prompt,
+											promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 											missingMessage: frm.msgs.missing + frm.msgs.postfix,
 											invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 											scrollOnFocus:false
 										}, input);
-			this.setAttr(dijit, this.field);
+			this.setAttr(dijit, this.dijitInfo.field);
 		  break;
 		case "editor":
-			var dijitId = this.general.id;
+			var dijitId = this.dijitInfo.general.id;
 			var div = domConstruct.create( "div", {
-													id: this.general.id,
+													id: this.dijitInfo.general.id,
 													}, td);
 			var dijit = new Editor({
-									id: this.general.id,
-									name: this.general.id,
+									id: this.dijitInfo.general.id,
+									name: this.dijitInfo.general.id,
 									height: "200px",
 									style: "width: 500px; margin-bottom: 0; padding-bottom: 0;",
 									extraPlugins: [AlwaysShowToolbar],
 									//extraPlugins: [AlwaysShowToolbar, 'createLink', 'unlink', 'insertImage'],
-									value: this.field.value,
-									promptMessage: frm.dijits[this.general.label].prompt,
+									value: this.dijitInfo.field.value,
+									promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 									missingMessage: frm.msgs.missing + frm.msgs.postfix,
 									invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 									scrollOnFocus:false
 								}, div);
 			 var input = domConstruct.create( "input", {
-														id: this.general.id + "-input",
-														name: this.general.id + "-input",
+														id: this.dijitInfo.general.id + "-input",
+														name: this.dijitInfo.general.id + "-input",
 														style: "visibility: collapse;",
-														promptMessage: frm.dijits[this.general.label].prompt,
+														promptMessage: frm.dijits[this.dijitInfo.general.label].prompt,
 														missingMessage: frm.msgs.missing + frm.msgs.postfix,
 														invalidMessage: frm.msgs.geninvalid + frm.msgs.postfix,
 														}, td, "first");
 			/* DON'T KNOW WHY THIS TRIGGERS AN ERROR											
-			for(var key in this.field){
+			for(var key in this.dijitInfo.field){
 				if(key != "type"){
-					//domAttr.set(dijitId + "-input", key, this.field[key]);
+					//domAttr.set(dijitId + "-input", key, this.dijitInfo.field[key]);
 				}
 			}
 			*/
@@ -212,43 +218,43 @@ return declare(null, {
 			*/
 		  break;
 		case "radio":
-			for(var i = 0; i < this.field.radio.length; i++){
+			for(var i = 0; i < this.dijitInfo.field.radio.length; i++){
 				input = domConstruct.create( "input", 
 													{
-														id: this.general.id + "-" + this.field.radio[i].option.value,
+														id: this.dijitInfo.general.id + "-" + this.dijitInfo.field.radio[i].option.value,
 													}, td);
 				dijit = new RadioButton({
-							name: this.general.id,
-							value: this.field.radio[i].option.value,
-							checked: this.field.radio[i].option.checked,
+							name: this.dijitInfo.general.id,
+							value: this.dijitInfo.field.radio[i].option.value,
+							checked: this.dijitInfo.field.radio[i].option.checked,
 							scrollOnFocus:false
 						}, input);
 				domConstruct.create( "label", 
 									{
-										"for": this.general.id + "-" + this.field.radio[i].option.value,
+										"for": this.dijitInfo.general.id + "-" + this.dijitInfo.field.radio[i].option.value,
 										style: "padding-left: 10px;",
-										innerHTML: this.field.radio[i].option.label,
+										innerHTML: this.dijitInfo.field.radio[i].option.label,
 									}, td);
 				domConstruct.create( "br", null, td);		
 			}
 		  break;
 		case "checkbox":
-			var input = domConstruct.create( "input", {	id: this.general.id }, td);
+			var input = domConstruct.create( "input", {	id: this.dijitInfo.general.id }, td);
 			var dijit = new CheckBox({	
-										id: this.general.id,
-										name: this.general.id,
-										checked: this.field.checked,
-										value: this.field.value,
+										id: this.dijitInfo.general.id,
+										name: this.dijitInfo.general.id,
+										checked: this.dijitInfo.field.checked,
+										value: this.dijitInfo.field.value,
 										scrollOnFocus:false
 										}, input);
 				domConstruct.create( "label", 
 									{
-										"for": this.general.id,
+										"for": this.dijitInfo.general.id,
 										style: "padding-left: 10px;",
-										innerHTML: this.field.label,
+										innerHTML: this.dijitInfo.field.label,
 									}, td);
-				if(this.field.required != null){
-					dijit.set("required", this.field.required);
+				if(this.dijitInfo.field.required != null){
+					dijit.set("required", this.dijitInfo.field.required);
 				}
 		  break;
 		default:
