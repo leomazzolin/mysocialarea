@@ -32,27 +32,49 @@ return declare(null, {
 
 			var menu = new Menu({ style: "display: none;"});
 			///////////////////////////////////////////////////
-			for(var j = 0; j < nlsMenu.menu[intMenu].submenu.length; j++){
-				//IF NO SUBMENU OPTIONS...
-				if(nlsMenu.menu[intMenu].submenu[j].submenu == null){
-					var href = this.makeHref(nlsMenu.menu[intMenu].submenu[j]);
-					var menuItem = new MenuItem({
-						label: nlsMenu.menu[intMenu].submenu[j].label,
-						"data-mysa-prop": { href: href, },
-					});
-					on(menuItem, "click", function(){
-						window.location.href = this["data-mysa-prop"].href;
-					});
-					menu.addChild(menuItem);
+			
+			//IF NO SUBMENU OPTIONS...
+			if(nlsMenu.menu[intMenu].submenu == null){
+				var href = this.makeHref(nlsMenu.menu[intMenu]);
+				var menuItem = new MenuItem({
+					label: nlsMenu.menu[intMenu].label,
+					"data-mysa-prop": { href: href, }, 
+				});
+				on(menuItem, "click", function(){
+					window.location.href = this["data-mysa-prop"].href;
+				});
+				menu.addChild(menuItem);
+			}
+			//IF HAS A SUBMENU....
+			else{
+				//CREATE A NEW SUBMENU ITEM
+				var subMenu = new Menu({ style: "display: none;"});
+				//START CREATING SUBMENU ITEMS TO ATTACH TO SUBMENU 
+				for(var j = 0; j < nlsMenu.menu[intMenu].submenu.length; j++){
+					//IF NO SUBMENU OPTIONS...
+					if(nlsMenu.menu[intMenu].submenu[j].submenu == null){
+						var href = this.makeHref(nlsMenu.menu[intMenu].submenu[j]);
+						var menuItem = new MenuItem({
+							label: nlsMenu.menu[intMenu].submenu[j].label,
+							"data-mysa-prop": { href: href, },
+						});
+						on(menuItem, "click", function(){
+							window.location.href = this["data-mysa-prop"].href;
+						});
+						subMenu.addChild(menuItem);
+					}
+					//HAS A SUBMENU...
+					else{
+						//var subSubMenu = new Menu({ style: "display: none;"});
+					}
 				}
-				//HAS A SUBMENU...
-				else{
-					//var subSubMenu = new Menu({ style: "display: none;"});
-				}
+				menu.addChild(new PopupMenuItem({	label: nlsMenu.menu[intMenu].label,
+													popup: subMenu
+												}));
 			}
 	
 			var button = new DropDownButton({
-				label: nlsMenu.menu[intMenu].label,
+				label: "Section Menu",
 				style: "font-size: 18px;",
 				dropDown: menu,
 				scrollOnFocus:false

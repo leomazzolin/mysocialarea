@@ -19,7 +19,6 @@ return declare(null, {
 	
 		fontsize: "14px",
 		type: "text",
-		dijitAttr: new Object(),
 		dijitInfo: new Object(),
 
 	errorInfo: {
@@ -29,9 +28,6 @@ return declare(null, {
 	constructor: function(jArg){
 		this.eHandle = new myError(this.errorInfo);
 		try{
-			this.dijitAttr = {
-								scrollOnFocus:false,
-							};
 			this.dijitInfo = jArg;
 			if(this.dijitInfo.field.type != null){
 				this.type = this.dijitInfo.field.type;
