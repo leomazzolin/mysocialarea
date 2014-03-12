@@ -1,0 +1,21 @@
+<div id="view-content">
+</div>
+<script>
+	require(["dojo/ready", "dojo/parser", "dojo/query", "dojo/dom", "dojo/dom-construct", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style",
+				"dijit/registry", "dijit/TitlePane", "dijit/form/Button",
+				"mysa/form/Formtemplate", "mysa/views/ViewTemplate",
+				"dojo/i18n!mysa/nls/ModConPage",
+				"dojo/domReady!"],
+	function(ready, parser, query, dom, domConstruct, domAttr, domClass, fx, on, style,
+				registry, TitlePane, Button,
+				Formtemplate, ViewTemplate,
+				Msgs){
+			parser.parse();
+			var form = <?php echo $this->formData;?>;
+			var items = <?php echo $this->formItems;?>;
+			var Form = new Formtemplate(<?php echo $this->formData;?>, <?php echo $this->formItems;?>);
+			Form.makeForm();
+			var vwTemp = new ViewTemplate();
+	});
+</script>
+<?php $this->Recaptcha(); ?>

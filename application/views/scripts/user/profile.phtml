@@ -1,0 +1,39 @@
+<div id="view-content" style="height: 500px;">
+    <div style="float:left; width:50%;">
+        <div id="div-1">
+            <fieldset class="general">
+                <legend><b>MySocialArea.com User ID:</b></legend>
+                    <p align="center"><b><?php echo $this->Format_Id($this->info->user->id) ?></b></p><br />
+            </fieldset>
+            <br />
+        </div>
+        <div id="div-2">
+            <fieldset class="general">
+                <legend><b>Email Address:</b> <input class="inline" name="email" type="button" value="Edit" onclick="email()" /></legend>
+                    <p align="center"><b><?php echo $this->info->user->email ?></b></p>
+            </fieldset>
+            <br />
+        </div>
+        <div id="div-3">
+            <fieldset class="general">
+                <legend><b>Personal Details:</b> <input class="inline" name="email" type="button" value="Edit" onclick="personal()" /></legend>
+                    <p align="center">Username: <b><?php echo $this->info->user_data->username ?></b></p>
+                    <p align="center">First Name: <b><?php echo $this->info->user_data->first_name ?></b></p>
+                    <p align="center">Last Name: <b><?php echo $this->info->user_data->last_name ?></b></p>
+            </fieldset>
+        </div>
+        <br clear="all" />
+        <a class="menu-item" href="/default/user/password">Change Password</a>
+    </div>
+</div>
+
+<script>
+function email()
+{
+  	window.location.href= "/user/email";
+}
+function personal()
+{
+  	window.location.href= "/user/personal";
+}
+</script>

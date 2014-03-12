@@ -1,0 +1,13 @@
+<style>
+.div-style { float: left; padding-left: 20px; }
+</style>
+<div class="div-style" >
+    <p><b>Category:</b><br /><?php echo $this->category; ?></p>
+</div>
+<div class="div-style">
+    <p><b>Poll Name:</b><br /><?php echo $this->poll_name; ?></p>
+</div>
+<div class="div-style">
+    <p><b>Choices:</b><br /><?php echo $this->choices; ?><b>Count:</b>&nbsp;<?php echo count(explode(';', $this->choices)); ?></p>
+</div>
+<br clear="all" /><br />

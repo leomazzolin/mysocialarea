@@ -1,0 +1,225 @@
+<div id="view-content">
+    <button type="button" id="startButton">Start</button>
+    <div id="output"></div>
+</div>
+<script>
+require(["dojo/request/xhr", "dojo/dom", "dojo/dom-construct", "dojo/json", "dojo/on", "dojo/domReady!"],
+function(xhr, dom, domConst, JSON, on){
+  on(dom.byId("startButton"), "click", function(){
+	  alert("Editor: " + dom.byId("editor-input").value);
+    domConst.place("<p>Requesting...</p>", "output");
+    xhr("/Rest/Pss/", {
+      handleAs: "json"
+    }).then(function(data){
+     domConst.place("<p>response: <code>" + JSON.stringify(data) + "</code></p>", "output");
+    });
+  });
+});
+</script>
+
+<script>
+	require(["dojo/ready", "dojo/parser", "dojo/query", "dojo/dom", "dojo/dom-construct", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style",
+				"dijit/registry",
+				"mysa/form/Formtemplate", "dojo/domReady!"],
+	function(ready, parser, query, dom, domConstruct, domAttr, domClass, fx, on, style,
+				registry,
+				Formtemplate){
+			parser.parse();
+			var form = { id: "myForm", encType: "multipart/form-data", action: "", method: "post", uri: "/pss/index", place: "view-content", recaptcha: true };
+
+			var items = 
+			[
+			{
+			general:
+				{
+					id: "email",
+					dijitType: "validation",
+					label: "Email",
+				},
+			field:
+				{
+					required: "required",
+					validator: dojox.validate.isEmailAddress,
+					invalidMessage: "Invalid Email format.",
+					promptMessage: "Enter your email address",
+				},
+			},
+			{
+			general:
+				{
+					id: "cemail",
+					dijitType: "validation",
+					label: "Confirm Email",
+				},
+			field: 
+				{
+					required: "required",
+					validator: dojox.validate.isEmailAddress,
+					invalidMessage: "Invalid Email format",
+					"data-mysa-conf": "email",
+					promptMessage: "Confirm your email address",
+				},
+			},
+			{	
+			general:
+				{
+					id: "password",
+					dijitType: "validation",
+					label: "Password",
+				},
+			field:
+				{
+					required: "required", 
+					regExp: "[a-zA-Z0-9\-\_]\{6,20}",
+					invalidMessage: "Invalid password format<br />A-Z, a-z, 0-9, dash (-), underscore (_)  only<br />6-20 characters",
+					type: "password",
+					maxlength: "20",
+					promptMessage: "A-Z, a-z, 0-9, dash (-), underscore (_) only<br />6-20 characters",
+				},
+			},
+			{
+			general:
+				{
+					id: "currency",
+					dijitType: "currency",
+					label: "Currency",
+				},
+			field:
+				{
+					required: "required",
+					constraints: {fractional: "true"},
+					value: "0.00",
+					currency: "USD",
+					invalidMessage: "Invalid currency format"
+				},
+			},
+			{
+			general:
+				{
+					id: "date",
+					dijitType: "date",
+					label: "Date",
+				},
+			field:
+				{
+					required: "required",
+					//"constraints": { datePattern : 'dd-MMM-yyyy' },
+					invalidMessage: "Invalid date entered"
+				},
+			},
+			{
+			general:
+				{
+					id: "spinner",
+					dijitType: "spinner",
+					label: "Spinner",
+				},
+			field:
+				{
+					required: "required",
+					value: "",
+					smallDelta: 10,
+					constraints: { min:0, max:1000, places: 0 },
+					invalidMessage: "Invalid entry"
+				},
+			},
+			{
+			general:
+				{
+					id: "number",
+					dijitType: "number",
+					label: "Number",
+				},
+			field:
+				{
+					required: "required",
+					value: "0.0",
+					constraints: {pattern: '0.0'},
+					invalidMessage: "Invalid entry"
+				},
+			},
+			{
+			general:
+				{
+					id: "time",
+					dijitType: "time",
+					label: "Time",
+				},
+			field:
+				{
+					required: "required", 
+					constraints: {timePattern: 'HH:mm', clickableIncrement: 'T00:05', visibleIncrement: 'T00:05', visibleRange: 'T01:00'},
+					invalidMessage: "Invalid entry",
+					promptMessage: "Hello"
+				},
+			},
+			{
+			general:
+				{
+					id: "editor",
+					dijitType: "editor",
+					label: "Editor",
+				},
+			field:
+				{
+					required: "required",
+					value: null,
+				},
+			},
+			{
+			general:
+				{
+					id: "radio",
+					dijitType: "radio",
+					label: "Radio Group",
+				},
+			field:
+				{
+					required: "required",
+					radio:
+					[
+					{
+						option:
+						{
+							label: "Reggie",
+							value: "reggie",
+							checked: "checked",
+						},
+					},
+					{
+						option:
+						{
+							label: "Ben",
+							value: "ben",
+							checked: false,
+						}
+					}
+					]
+				},
+			},
+			{
+			general:
+				{
+					id: "checkbox",
+					dijitType: "checkbox",
+					label: "Checkbox",
+				},
+			field:
+				{
+					required: "required",
+					checked: false,
+					value: "value",
+					label: "I Agree"
+				},
+			},
+		  	];
+			
+			var Form = new Formtemplate(form, items);
+			Form.makeForm();
+		
+		//on(registry.byId("time"), "change", function(){
+		//	alert(registry.byId("time").value.toString().replace(/.*1970\s(\S+).*/,'$1'));
+		//});
+	});
+</script>
+<?php $this->Recaptcha(); ?>

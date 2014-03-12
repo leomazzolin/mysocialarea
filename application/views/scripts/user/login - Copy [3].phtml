@@ -1,0 +1,35 @@
+<div id="view-content">
+</div>
+<script>
+	require(["dojo/ready", "dojo/parser", "dojo/query", "dojo/dom", "dojo/dom-construct", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style",
+				"dijit/registry", "dijit/TitlePane", "dijit/form/Button",
+				"mysa/form/Formtemplate", "dojo/domReady!"],
+	function(ready, parser, query, dom, domConstruct, domAttr, domClass, fx, on, style,
+				registry, TitlePane, Button,
+				Formtemplate){
+			var Form = new Formtemplate(<?php echo $this->formData;?>, <?php echo $this->formItems;?>);
+			var tp = new TitlePane({
+									title: "With your MySocialArea.com Credentials:",
+									content: '<div id="vw-login-by-mysa"></div>',
+									style: "background-color:#CCC;" 
+									});
+			dom.byId("view-content").appendChild(tp.domNode);
+			tp.startup();
+			var tp = new TitlePane({
+									title: "With your Facebook Account:",
+									content: '<div id="vw-login-by-fb"><div class="fb-login-button" size="xlarge" data-width="200"></div></div>',
+									style: "background-color:#CCC;" 
+									});
+			dom.byId("view-content").appendChild(tp.domNode);
+			tp.startup();
+			Form.makeForm();
+	});
+
+</script><!--
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=188317251310377";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>-->

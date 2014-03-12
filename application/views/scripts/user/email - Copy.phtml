@@ -1,0 +1,17 @@
+<div id="view-content">
+    <div style="float:left; width:45%;">
+		<?php
+        $this->Instructions1('default_user_email'); ?>
+        <p>Your current Email Address: <?php echo $this->info->email ?></p>
+        <br />
+        <?php
+        echo $this->form;
+        ?>
+    </div>
+</div>
+<script>
+function callback_form_user_login_1()
+{
+  	window.location.href= "/user/index";
+}
+</script>

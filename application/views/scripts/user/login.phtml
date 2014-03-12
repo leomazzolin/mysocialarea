@@ -1,0 +1,13 @@
+<div id="view-content">
+</div>
+<script>
+	require(["dojo/ready", "dojo/parser", "dojo/query", "dojo/dom", "dojo/dom-construct", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style",
+				"dijit/registry", "dijit/TitlePane", "dijit/form/Button",
+				"mysa/form/Formtemplate", "dojo/domReady!"],
+	function(ready, parser, query, dom, domConstruct, domAttr, domClass, fx, on, style,
+				registry, TitlePane, Button,
+				Formtemplate){
+			var Form = new Formtemplate(<?php echo $this->formData;?>, <?php echo $this->formItems;?>);
+			Form.makeForm();
+	});
+</script>

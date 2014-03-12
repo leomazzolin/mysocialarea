@@ -1,0 +1,89 @@
+<style>
+#vw-sidemenu-container{ float:left; height: 600px; margin: 0 5px 0 5px; padding: 0 5px 0 0; }
+#vw-content-container{ float:left; width: 80%; margin: 0 5px 0 5px; padding: 5px; 
+						/*background-image:url(/images/pss/1-69-2.jpg); background-size: 200px 150px; background-repeat:repeat;*/ }
+</style>
+<div id="view-content">
+	<div id="vw-sidemenu-container">
+    </div>
+    <div id="vw-content-container">
+		<script>
+        //var formVariables = <?php //echo $this->formVariables; ?>;
+        require(["dojo/parser", "dijit/form/Form", "dijit/form/Button", "dijit/form/ValidationTextBox", "dijit/form/DateTextBox",
+                            "dijit/form/ValidationTextBox", "dojox/validate/web"]);
+        require([
+             "dojo/ready", "dojo/store/Memory", "dijit/form/Button", "dijit/form/ValidationTextBox", "dijit/form/FilteringSelect", "dojo/dom-attr", "dojo/parser", "dojo/domReady!"
+        ], function(ready, Memory, Button, ValidationTextBox, FilteringSelect, domAttr, parser){
+            ready(function(){
+                var button = new Button({
+                    id: "submit",
+                    name: "submit",
+                    type: "submit",
+                    value: "Submit",
+                    innerHTML: "Submit"
+                }, "submit");
+                button = new Button({
+                    //id: "name",
+                    name: "cancel",
+                    type: "cancel",
+                    value: "Cancel",
+                    innerHTML: "Cancel",
+                    onClick: function(){window.location.href = '/pss/pages';}
+                }, "cancel");
+            });
+        });
+        </script>
+        <div data-dojo-type="dijit/form/Form" id="myForm" data-dojo-id="myForm" encType="multipart/form-data"
+                action="" method="post" style="margin: 20px 0 0 100px;">  
+            <script type="dojo/on" data-dojo-event="submit">
+                if(this.validate()){
+                    return confirm('All form field inputs look good. Press OK to submit');
+                }else{
+                    alert('Form contains invalid data.  Please correct first');
+                    return false;
+                }
+                return true;
+            </script>
+            <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+                 <caption style="font-size: 20px; padding: 5px; border: 3px solid green; text-align:left;">
+                 <?php echo $this->flags->formCaption; ?></caption>
+                <tr>
+                    <td>
+                        <label class="required">Add a picture:</label>
+                    </td>
+                    <td>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="5000000" id="MAX_FILE_SIZE" />
+                        <input type="file" name="file" id="file" required="true"  />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="required" for="mycaptcha">Please fill out ReCaptcha Field:</label>
+                    </td>
+                    <td>
+                        <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LcIPNISAAAAAJAp2oXxFBcVkrvoGeH_lmLhl_4V"></script>
+                        <noscript>
+                           <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcIPNISAAAAAJAp2oXxFBcVkrvoGeH_lmLhl_4V"
+                               height="300" width="500" frameborder="0"></iframe><br>
+                           <textarea id="mycaptcha" name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                           <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+                        </noscript>
+                    </td>
+                </tr>
+            </table>
+            <button id="submit"></button>
+            <button id="cancel"></button>
+        </div>
+     </div>
+</div>
+<script>
+require(["mysa/controllers/Pss", "dojo/dom", "dojo/dom-construct", "dojo/ready",  "dojo/domReady!"],
+function(Pss, dom, domConstruct, ready){
+	ready(function(){
+		var pss = new Pss();
+		pss.makeSideMenu();
+	});
+});
+</script>
+
+

@@ -1,0 +1,39 @@
+<div id="view-content">
+</div>
+<script>
+require(["mysa/controllers/Pss", "mysa/views/ViewTemplate", "dojo/dom", "dojo/dom-construct", "dojo/ready",  "dojo/domReady!"],
+function(Pss, ViewTemplate, dom, domConstruct, ready){
+	ready(function(){
+		var view = new ViewTemplate();
+		view.makeSectionMenu(<?php echo $this->jSectionMenuItems; ?>);
+		var pss = new Pss();
+	});
+});
+</script>
+<div id="vw-div-1">
+    <p>
+    Welcome to the PET SOCIAL SPACE section of my website where you can create a social media style presence for your pet. 
+    However, it is not just a presence you will be creating on the web for pet but 
+    Create a page for the following reasons:
+    </p>
+    <ul>
+        <li>To show off your pet</li>
+        <li>As a memorial/tribute for beloved pet that has passed away</li>
+        <li>Or just because you love your pet so much</li>
+    </ul>
+    <p>
+    When you create a page for your pet you are allowed to upload 1 banner picture of your pet for your pet&apos;s 
+    homepage and up to 10 other pictures of your pet to display on the page. You can then write a little message about each 
+    picture.
+    </p>
+    <p>
+    You can do the following with every pet page you create:
+    <ul>
+        <li>Upload up to 10 pictures of your pet at any given time</li>
+        <li>Supply a short blog about your pet with a full featured rich-text editor.</li>
+    </ul>
+    </p>
+    <p>
+    The pages will be expanded to include more options in the future.
+    </p>
+</div>

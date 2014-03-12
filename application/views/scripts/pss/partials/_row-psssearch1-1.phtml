@@ -1,0 +1,7 @@
+<style>
+.orientation-0{ transform: rotate(0deg) ; }
+.orientation-90{ transform: rotate(90deg) scale(.75,.75) translateY( 150px); }
+.orientation-270{ transform: rotate(270deg) scale(.75,.75) translateY( -150px); }
+.orientation-180{ transform: rotate(180deg); }
+</style>
+<img src="/images/pss/<?php echo $this->id; ?>.<?php echo $this->extension; ?>" class="orientation-<?php echo $this->orientation; ?>" width="500" />

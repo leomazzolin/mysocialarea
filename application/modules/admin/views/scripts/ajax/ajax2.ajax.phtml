@@ -1,0 +1,11 @@
+<br />
+<h4>PERSONAL:</h4>
+<p><?php
+foreach($this->personal as $row)
+{
+?>
+<?php echo $row->description . ': ' . $row->value; ?><br />
+<?php
+}
+?>
+</p>

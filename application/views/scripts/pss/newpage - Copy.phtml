@@ -1,0 +1,139 @@
+<script>
+var formVariables = <?php echo $this->formVariables; ?>;
+</script>
+
+<script>
+require(["dojo/parser", "dijit/form/Form", "dijit/form/Button", "dijit/form/ValidationTextBox", "dijit/form/DateTextBox",
+					"dijit/form/ValidationTextBox", "dojox/validate/web"]);
+</script>
+<script>
+var pettypes = <?php echo $this->types; ?>;
+<?php if($this->flags->setBreeds == true){ ?>
+var breeds = <?php echo $this->breeds; ?>;
+<?php } ?>
+var initialPetTypeVal = <?php echo $this->initialPetTypeVal; ?>;
+
+require([
+     "dojo/ready", "dojo/store/Memory", "dijit/form/Button", "dijit/form/ValidationTextBox", "dijit/form/FilteringSelect", "dojo/dom-attr", "dojo/parser", "dojo/domReady!"
+], function(ready, Memory, Button, ValidationTextBox, FilteringSelect, domAttr, parser){
+    var petStore = new Memory({
+        data: pettypes
+    });
+<?php if($this->flags->setBreeds == true){ ?>
+    var breedStore = new Memory({
+        data: breeds
+    });
+<?php } ?>
+
+    ready(function(){
+		var button = new Button({
+            id: "submit",
+            name: "submit",
+            type: "submit",
+            value: "Submit",
+			innerHTML: "Submit"
+        }, "submit");
+		button = new Button({
+            //id: "name",
+            name: "cancel",
+            type: "cancel",
+            value: "Cancel",
+			innerHTML: "Cancel",
+			onClick: function(){window.location.href = '/default/pss/pages';}
+        }, "cancel");
+		var vb1 = new ValidationTextBox({
+            id: "name",
+            name: "name",
+			required: "required",
+			maxlength: 20,
+			regExp:'[a-zA-Z]+',
+			invalidMessage:'Name has invalid characters. A-Z or a-z only'
+        }, "name");
+        var comboBox1 = new FilteringSelect({
+            id: "pettype",
+            name: "pettype",
+            value: initialPetTypeVal,
+            store: petStore,
+            searchAttr: "pet_type",
+			required: "required",
+			onChange: function(){ window.location.href = '/default/pss/newpage/type_id/' + comboBox1.value;}
+        }, "pettype");
+		<?php if($this->flags->setBreeds == true){ ?>
+        var comboBox2 = new FilteringSelect({
+            id: "breed",
+            name: "breed",
+            store: breedStore,
+            searchAttr: "desc",
+			required: "required",
+        }, "breed");
+		<?php } ?>
+    });
+});
+</script>
+<div data-dojo-type="dijit/form/Form" id="myForm" data-dojo-id="myForm" encType="multipart/form-data"
+		action="" method="post" style="margin: 20px 0 0 100px;">  
+    <script type="dojo/on" data-dojo-event="submit">
+        if(this.validate()){
+            return confirm('All form field inputs look good. Press OK to submit');
+        }else{
+            alert('Form contains invalid data.  Please correct first');
+            return false;
+        }
+        return true;
+    </script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+    	 <caption style="font-size: 20px; padding: 5px; border: 3px solid green; text-align:left;">
+         <?php echo $this->flags->formCaption; ?></caption>
+        <tr>
+            <td>
+                <label class="required" for="name">Name:</label>
+            </td>
+            <td>
+            	<input id="name"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="required" for="pettype">Type of Pet:</label>
+            </td>
+            <td>
+            	<input id="pettype"></input>
+            </td>
+        </tr>
+		<?php if($this->flags->setBreeds == true){ ?>
+        <tr>
+            <td>
+                <label class="required" for="breed">Breed:</label>
+            </td>
+            <td>
+            	<input id="breed"></input>
+            </td>
+        </tr>
+        <tr>
+        <?php } ?>
+            <td>
+                <label class="required">Add a picture:</label>
+            </td>
+            <td>
+                <input type="hidden" name="MAX_FILE_SIZE" value="5000000" id="MAX_FILE_SIZE" />
+                <input type="file" name="file" id="file" required="true"  />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="required" for="mycaptcha">Please fill out ReCaptcha Field:</label>
+            </td>
+            <td>
+				<script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LcIPNISAAAAAJAp2oXxFBcVkrvoGeH_lmLhl_4V"></script>
+                <noscript>
+                   <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcIPNISAAAAAJAp2oXxFBcVkrvoGeH_lmLhl_4V"
+                       height="300" width="500" frameborder="0"></iframe><br>
+                   <textarea id="mycaptcha" name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                   <input type="hidden" name="recaptcha_response_field" value="manual_challenge">
+                </noscript>
+            </td>
+        </tr>
+    </table>
+    <button id="submit"></button>
+    <button id="cancel"></button>
+</div>

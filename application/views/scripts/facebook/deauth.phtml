@@ -1,0 +1,12 @@
+<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>Facebook</b> and script/action name <b>deauth</b></p>
+</div>
+ <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+ <fb:login-button autologoutlink="true" onlogin="login();"></fb:login-button>
+ <script type="text/javascript">
+  FB.init("<?php echo '188317251310377'; ?>", "/facebook/xdreceiver", {'reloadIfSessionStateChanged':true});
+  function login() {
+   alert('Logged into Facebook.');
+  }
+ </script>

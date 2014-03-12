@@ -1,0 +1,117 @@
+<style>
+#vw-page-title{ width: 30%; margin: auto; text-align:center;}
+#vw-picture-container{ width:100%; height: 400px; margin: 2px; padding: 5px; border: 1px solid black; overflow: auto;}
+#vw-picture{ float:left; width: 500px; margin: 10px 20px 10px 20px; transform:translateY(0px) rotate(0deg); }
+#editor{ float:left; width: 600px; margin: 10px 20px 10px 20px; background-color: yellow;}
+.vw-title{ padding: 2px 5px 2px 5px; border:1px solid black; background-color:#FFC;}
+</style>
+<script>
+require(["dojo/parser", "dijit/InlineEditBox", "dijit/Editor", "dijit/_editor/plugins/AlwaysShowToolbar"]);
+</script>
+
+<div id="view-content">
+</div>
+    <div id="vw-div-1">
+    	<p>This is where you can add new pet pages and manage existing ones. Please select from options to the left to continue.</p>       
+    </div>
+<script>
+<?php 
+if($this->varInits->isPageRequest == true)
+{?>
+	var pics = <?php echo $this->pics; ?>;
+<?php
+}
+?>
+function navigate(uri){
+	window.location.href = uri;
+}
+require([	"mysa/controllers/Pss", "mysa/views/ViewTemplate",
+			"dojo/ready", "dojo/on", "dijit/Menu", "dijit/MenuItem", "dijit/CheckedMenuItem", "dijit/MenuSeparator", "dijit/PopupMenuItem", "dijit/Editor", "dijit/_editor/plugins/AlwaysShowToolbar", "dijit/form/ComboButton",
+			"dojo/json", "dojo/dom", "dojo/dom-construct", "dijit/form/Button", "dojo/domReady!"
+		],
+function(Pss, ViewTemplate, ready, on, Menu, MenuItem, CheckedMenuItem, MenuSeparator, PopupMenuItem, Editor, AlwaysShowToolbar, ComboButton, JSON, dom, domConstruct, Button){
+    ready(function(){
+		//var view = new ViewTemplate();
+		//view.makeSectionMenu(<?php //echo $this->jSectionMenuItems; ?>);
+		var pss = new Pss();
+		var varInits = JSON.parse('<?php echo $this->json; ?>');
+		//varInits.isSignedIn = false;
+		if(varInits.isSignedIn === true)
+		{
+			
+			var place = "view-content";
+			var combobutton = domConstruct.create("div", {	id: "vw-pagemenu", }, place);
+			var menu = new Menu({
+								style: "display: none;"
+								});
+								
+			var menuItem = new MenuItem({
+											label: "New Pet Page",
+											"data-mysa-href": "/pss/newpage",
+										});
+			on(menuItem, "click", function(){
+				window.location.href = this.get("data-mysa-href");
+			});
+			menu.addChild(menuItem);
+	
+			var pages = JSON.parse('<?php echo $this->pages; ?>');
+			var pSubMenu = new Menu();
+			for (i=0;i<pages.length;i++){
+				pSubMenu.addChild(new MenuItem({
+					label: pages[i].name + ' [' + pages[i].id + ']',
+					onClick: "navigate('/pss/pages/user_id/"+ pages[i].user_id + "/page_id/" + pages[i].id + "')",
+				}));
+			}
+			menu.addChild(new PopupMenuItem({
+				label: "Your Pet Pages:",
+				popup: pSubMenu
+			}));
+			if(varInits.isPageRequest === true)
+			{
+				var page = JSON.parse('<?php echo $this->page; ?>');
+				menu.addChild(new MenuSeparator());
+				pSubMenu = new Menu();
+				pSubMenu.addChild(new MenuItem({
+					label: 'Add a picture',
+					onClick: "navigate('/pss/addpicture/user_id/" + page.user_id + "/page_id/" + page.id + "')",
+				}));
+				menu.addChild(new PopupMenuItem({
+					label: "Manage this page",
+					popup: pSubMenu
+				}));
+			}
+			menu.startup();
+
+			var button = new ComboButton({
+											label: "Page Menu:",
+											style: "font-size: 14px;",
+											dropDown: menu,
+										}, combobutton);
+
+			domConstruct.place("vw-div-1", "view-content");
+			//MAKE PAGETITLE
+			div = domConstruct.create("div", { id: "vw-page-title" }, "view-content", "first");
+			var h1 = domConstruct.create("h1", {	innerHTML: page.name,
+													class: "vw-title" }, "vw-page-title");
+			div = domConstruct.create("div", { id: "vw-picture" }, "vw-cc-left");
+			if(varInits.isPageRequest === true)
+			{
+				for (i=0;i<pics.length;i++){
+				var img = domConstruct.create("img", { 	width: "500",
+														src: "/images/pss/" + pics[i].id,
+														}, "vw-picture");
+				}
+				
+				var div = new Editor({
+								extraPlugins: [AlwaysShowToolbar]
+							}, "editor");
+				var br = domConstruct.create("br", { clear: "all" }, "view-content");
+			}
+		}
+		else
+		{
+			var p = domConstruct.create("p", { innerHTML: "Login" }, "view-content");
+		}
+    });
+});
+</script>

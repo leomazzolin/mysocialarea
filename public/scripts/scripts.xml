@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scripts>
+	<scriptfiles>
+		<scriptfile>jquery-1.7.1.min.js</scriptfile>
+		<scriptfile>jquery-ui-1.8.18.custom.min.js</scriptfile>
+		<scriptfile>jquery.tablesorter.js</scriptfile>
+		<scriptfile>jquery-ui-timepicker-addon.js</scriptfile>
+		<scriptfile>jQuerys.js</scriptfile>
+		<scriptfile>facebook.js</scriptfile>
+	</scriptfiles>
+</scripts>

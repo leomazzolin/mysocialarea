@@ -1,0 +1,10 @@
+<a href="/admin/op/create">Create a new Poll</a>
+<div id="view-content">
+<p>Poll Count:&nbsp;<?php echo $this->poll_count ?></p>
+<br /><br />
+<?php
+if ($this->polls != NULL)
+{
+	echo $this->partialLoop('op/partials/_poll-row.phtml', $this->polls);
+} ?>
+</div>

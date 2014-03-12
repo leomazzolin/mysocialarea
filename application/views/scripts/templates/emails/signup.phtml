@@ -1,0 +1,67 @@
+<script>
+<?php
+include(APPLICATION_PATH . '/../public/scripts/jquery-latest.js');
+?>
+</script>
+<!--
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+     <defs>
+        <linearGradient id="myLinearGradient1"
+                        x1="0%" y1="0%"
+                        x2="0%" y2="100%"
+                        spreadMethod="pad">
+          <stop offset="0%"   stop-color="#00cc00" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#006600" stop-opacity="1"/>
+        </linearGradient>
+        <filter id="f1" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />
+      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+      </defs>
+      <!--<rect x="0" y="0" width="88%" height="98px" rx="0" ry="0"
+         style="fill:url(#myLinearGradient1);
+                stroke: #005000;
+                stroke-width: 3;" />
+    <text x="10"  y="30" class="svg1">My
+        <tspan x="10" y="60" class="svg1">SocialArea</tspan>
+        <tspan x="100" y="90" class="svg1">.com</tspan>
+    </text>
+</svg>
+-->
+<style>
+p { border: 1px solid black; }
+.red{color:red; }
+.black{color:black;}
+
+</style>
+<p>
+Thank you for signing up with MySocialArea.com.
+</p>
+<br />
+<p>
+INSTRUCTIONS:<br />
+To complete the enrolment process with us please go to the following link 
+and enter the token password provided below where asked. 
+<br /><br />
+LINK: <a href="/default/user/confirmemail">http://mysocialarea.com/user/activate</a><br />
+TOKEN PASSWORD: <?php echo $this->token; ?>
+</p>
+</div>
+
+<script>
+$('p').mouseover(
+	function(){
+		$(this).removeClass('black');
+		$(this).addClass('red');
+	}
+);
+
+$('p').mouseout(
+	function(){
+		$(this).removeClass('red');
+		$(this).addClass('black');
+	}
+);
+</script>

@@ -1,0 +1,52 @@
+<style>
+#vw-div-1 {float:left; width: 65%;}
+#vw-div-2 {float:left; width: 33%; margin-left: 10px;}
+.pos_fixed
+{
+position:fixed;
+top:70px;
+}
+</style>
+<div id="view-content">
+	<div id="vw-div-1">
+        <table id="myTable" class='tablesorter'>
+            <thead>
+                <tr>
+                    <th>User ID:</th>
+                    <th>Email:</th>
+                    <th>Token:</th>
+                    <th>Token Reason:</th>
+                    <th>Options:</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($this->users as $user)
+            {?>
+                <tr>
+                    <th><?php echo $user->id; ?></th>
+                    <th><?php echo $user->email; ?></th>
+                    <th><?php echo $user->token; ?></th>
+                    <th><?php echo $user->token_reason; ?></th>
+                    <th><button onclick="getInfo(<?php echo $user->id; ?>)">View</button><button>Edit</button><button>Delete</button></th>
+                </tr>
+            <?php
+             }?>
+            </tbody>
+        </table>
+    </div>
+    <div id="vw-div-2">
+    	<div class="pos_fixed">
+            <h3>USER INFO FOR ID: <span id="user_id"></span></h3>
+            <div id="personal">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var myjson = <?php echo $this->myjson; ?>;
+function getInfo(val)
+{
+	$("#personal").load( "/admin/ajax/ajax2/val/" + val);
+	$("#user_id").html(val);
+}
+</script>

@@ -1,0 +1,60 @@
+<style>
+.hilite { background-color:#FF6;}
+</style>
+<p>QUESTION ID:&nbsp;<?php echo $this->row_Q->id; ?></p>
+<br />
+<fieldset><legend>Options:</legend>
+<button style="display:inline" onclick="editFunction()">Edit</button>
+<button style="display:inline" onclick="deleteFunction()">Delete</button>
+<button style="display:inline" onclick="answerFunction()">Answer: <b><?php if(isset($this->row_ans->value)){echo strtoupper($this->row_ans->value);} ?></b></button>
+</fieldset>
+<br />
+<fieldset><legend>QUESTION INFO:</legend>
+<h3 style="display:inline;">Close Date:</h3>
+<p style="display:inline; "class="hilite"><?php echo $this->Date1($this->row_Q->close_date) ?></p>
+<br />
+<h3 style="display:inline;">Close Time:</h3>
+<p style="display:inline;" class="hilite"><?php echo $this->row_Q->close_time ?></p>
+<br />
+<h3 style="display:inline;">Sport:</h3>
+<p style="display:inline;" class="hilite"><?php echo $this->row_sport ?></p>
+</fieldset>
+<br clear="all" />
+<fieldset><legend>QUESTION:</legend>
+<p><?php echo $this->row_Q->question ?></p>
+</fieldset>
+<br />
+<fieldset><legend>CHOICE A:</legend>
+<p><?php echo $this->row_Q->ch_a ?></p>
+</fieldset>
+<br />
+<fieldset><legend>CHOICE B:</legend>
+<p><?php echo $this->row_Q->ch_b ?></p>
+</fieldset>
+<br />
+<?php
+foreach($this->rows_QD as $row)
+{
+	$this->Questiondata1($row);
+}
+?>
+<script>
+function deleteFunction()
+{
+var r=confirm("Delete Question with ID: <?php echo $this->row_Q->id ?>!");
+if (r==true)
+  {
+  	window.location.href= "/admin/qotd/delete/id/<?php echo $this->row_Q->id; ?>";
+  }
+}
+
+function editFunction()
+{
+  	window.location.href= "/admin/qotd/edit/id/<?php echo $this->row_Q->id; ?>";
+}
+
+function answerFunction()
+{
+  	window.location.href= "/admin/qotd/answer/id/<?php echo $this->row_Q->id; ?>";
+}
+</script>

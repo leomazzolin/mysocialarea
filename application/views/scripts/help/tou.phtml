@@ -1,0 +1,15 @@
+<div id="view-content">
+</div>
+<script>
+require(["mysa/controllers/Help", "mysa/views/ViewTemplate", "dojo/dom", "dojo/dom-construct", "dojo/ready",  "dojo/domReady!"],
+function(Help, ViewTemplate, dom, domConstruct, ready){
+	ready(function(){
+		var view = new ViewTemplate();
+		view.makeSectionMenu(<?php echo $this->jSectionMenuItems; ?>);
+		domConstruct.place("vw-privacy", "view-content");
+	});
+});
+</script>
+<div id="vw-privacy">
+<?php $this->Content_Tou(); ?>
+</div>

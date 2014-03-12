@@ -1,0 +1,19 @@
+<?php
+$this->loadEmailHeader();
+$data = $this->data;
+?>
+<div style="width:50em;">
+<p>
+Hello <?php echo $this->first_name; ?>&nbsp;<?php echo $this->last_name; ?>&nbsp;(Username:&nbsp;<?php echo $this->username; ?>). 
+You have requested this email because you forgot your login credentials. 
+If you did not request this email then somebody must have entered your email by mistake.
+</p>
+<br />
+<p>
+INSTRUCTIONS:<br />
+Please navigate to <a href="http://www.topdog-uofficepools.com/member/token">http://www.topdog-uofficepools.com/member/token</a> 
+and enter the token password provided to you below where asked.
+<br /><br />
+TOKEN PASSWORD:&nbsp;<?php echo $this->token; ?>
+</p>
+</div>

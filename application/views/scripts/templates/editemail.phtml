@@ -1,0 +1,17 @@
+<?php
+$this->loadEmailHeader();
+$data = $this->data;
+?>
+<div style="width:50em;">
+<p>
+Hello. You have received this email because you changed you email address.
+</p>
+<br />
+<p>
+INSTRUCTIONS:<br />
+Go to <a href="http://www.topdog-uofficepools.com/member/token">http://www.topdog-uofficepools.com/member/token</a> 
+and then enter the following information to login<br /><br />
+USERNAME:&nbsp;&nbsp;<?php echo $this->username ?><br />
+TOKEN PASSWORD:&nbsp;&nbsp;<b><?php echo $this->token ?></b>
+</p>
+</div>

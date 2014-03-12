@@ -1,0 +1,20 @@
+<style>
+#div-1{padding:10px; float:left; width: 33%;}
+#div-2{padding:10px; float:left; width: 33%;}
+</style>
+<br />
+<div id="div-1">
+<h3>GENERAL INFO</h3>
+<br />
+<p>Total Question Count:&nbsp;&nbsp;<?php echo $this->q_count; ?></p>
+<br />
+<h3>ACTIONS:</h3>
+<input name="mark" type="button" value="Mark" />
+</div>
+<div id="div-2">
+<h3>DETAILS</h3>
+<br />
+<h4>SPORT COUNT:</h4>
+<?php echo $this->partialLoop('qotd/partials/_row-2.phtml', $this->sport_info); ?>
+
+</div>

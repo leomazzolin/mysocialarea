@@ -1,0 +1,100 @@
+<div id="view-content">
+</div>
+<script>
+	require(["mysa/controllers/Pss", "mysa/views/ViewTemplate", "dojo/dom", "dojo/dom-construct", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style", "dojo/domReady!"],
+	function(Pss, ViewTemplate, dom, domConstruct, domAttr, domClass, fx, on, style){
+		//var view = new ViewTemplate();
+		//view.makeSectionMenu(<?php //echo $this->jSectionMenuItems; ?>);
+		var pss = new Pss();
+		var pages = <?php echo $this->pages; ?>;
+		var pic1 = <?php echo $this->pic1; ?>;
+		var pic2 = <?php echo $this->pic2; ?>;
+		var pic3 = <?php echo $this->pic3; ?>;
+		var div = new Array();
+		var a = new Array();
+		var img = new Array();
+		for(i=0;i<3;i++){
+				div[i] = domConstruct.create("div", {id: "vw-pic-gallery-" + i, class: "picture-viewer" }, "view-content");
+				a[i] = domConstruct.create("a", {id: "vw-pic-gallery-anchor-" + i,
+												 }, "vw-pic-gallery-" + i);
+				img[i] = domConstruct.create("img", {id: "vw-pic-gallery-img-" + i,
+													 width: "425px",
+												 }, "vw-pic-gallery-anchor-" + i);
+		}
+		
+		var animateFunc1 = function(){
+			domAttr.set("vw-pic-gallery-img-0", "src", "/images/pss/" + pic1[i].id + "." + pic1[i].extension);
+			domAttr.set("vw-pic-gallery-anchor-0", "href", "/pss/search/id/" + pic1[i].id);
+			domClass.remove("vw-pic-gallery-img-0");
+			domClass.add("vw-pic-gallery-img-0", "orientation-" + pic1[i].orientation);
+			style.set("vw-pic-gallery-img-0", "opacity", "0");
+			var fadeArgs = {
+				node: "vw-pic-gallery-img-0",
+				duration: 5000,
+			};
+			fx.fadeIn(fadeArgs).play();
+		}
+		var i = 0;
+		function nextFrame1() {
+			//if(i < pics.length) {
+				animateFunc1();
+				i++;
+				i = i%pic1.length;
+				// Continue the loop in 3s
+				setTimeout(nextFrame1, 8000);
+			//}
+		}
+		// Start the loop
+		setTimeout(nextFrame1, 0);
+
+		var animateFunc2 = function(){
+			domAttr.set("vw-pic-gallery-img-1", "src", "/images/pss/" + pic2[j].id + "." + pic2[j].extension);
+			domAttr.set("vw-pic-gallery-anchor-1", "href", "/pss/search/id/" + pic2[i].id);
+			domClass.remove("vw-pic-gallery-img-1");
+			domClass.add("vw-pic-gallery-img-1", "orientation-" + pic2[j].orientation);
+			style.set("vw-pic-gallery-img-1", "opacity", "0");
+			var fadeArgs = {
+				node: "vw-pic-gallery-img-1",
+				duration: 5000,
+			};
+			fx.fadeIn(fadeArgs).play();
+		}
+		var j = 0;
+		function nextFrame2() {
+			//if(i < pics.length) {
+				animateFunc2();
+				j++;
+				j = j%pic2.length;
+				// Continue the loop in 3s
+				setTimeout(nextFrame2, 8000);
+			//}
+		}
+		// Start the loop
+		setTimeout(nextFrame2, 1000);
+
+		var animateFunc3 = function(){
+			domAttr.set("vw-pic-gallery-img-2", "src", "/images/pss/" + pic3[j].id + "." + pic3[j].extension);
+			domAttr.set("vw-pic-gallery-anchor-2", "href", "/pss/search/id/" + pic3[i].id);
+			domClass.remove("vw-pic-gallery-img-2");
+			domClass.add("vw-pic-gallery-img-2", "orientation-" + pic3[j].orientation);
+			style.set("vw-pic-gallery-img-2", "opacity", "0");
+			var fadeArgs = {
+				node: "vw-pic-gallery-img-2",
+				duration: 5000,
+			};
+			fx.fadeIn(fadeArgs).play();
+		}
+		var k = 0;
+		function nextFrame3() {
+			//if(i < pics.length) {
+				animateFunc3();
+				k++;
+				k = k%pic3.length;
+				// Continue the loop in 3s
+				setTimeout(nextFrame3, 10000);
+			//}
+		}
+		// Start the loop
+		setTimeout(nextFrame3, 2000);
+	});
+</script>

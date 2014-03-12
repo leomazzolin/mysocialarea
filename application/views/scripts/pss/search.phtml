@@ -1,0 +1,98 @@
+<style>
+#vw-sidemenu-container{ float:left; height: 600px; margin: 0 5px 0 5px; padding: 0 5px 0 0; }
+#vw-content-container{ float:left; width: 80%; margin: 0 5px 0 5px; padding: 5px; 
+						/*background-image:url(/images/pss/1-69-2.jpg); background-size: 200px 150px; background-repeat:repeat;*/ }
+#vw-page-title{ width: 30%; margin: auto; text-align:center;}
+#vw-picture-container{ width:100%; height: 400px; margin: 2px; padding: 5px; border: 1px solid black; overflow: auto;}
+#vw-picture{ float:left; width: 500px; margin: 10px 20px 10px 20px; transform:translateY(0px) rotate(0deg); }
+#vw-cc-left, #vw-cc-right{float:left; width: 48%;}
+#editor{ float:left; width: 600px; margin: 10px 20px 10px 20px; background-color: yellow;}
+.vw-title{ padding: 2px 5px 2px 5px; border:1px solid black; background-color:#FFC;}
+</style>
+<style>
+#page-caption{width: 100%, height: 800px; overflow:auto;}
+</style>
+<script>
+require([
+	"mysa/controllers/Pss",
+    "dojo/_base/window", "dojo/store/Memory",
+    "dijit/tree/ObjectStoreModel", "dijit/Tree", "dojo/dom", "dojo/dom-construct", "dojo/request", "dojo/parser",
+    "dojo/domReady!"
+], function(Pss, win, Memory, ObjectStoreModel, Tree, dom, domConstruct, request, parser){
+	var pss = new Pss();
+	//pss.makeSideMenu();
+	domConstruct.create("h3", {	innerHTML: "Page Search:" }, "vw-sidemenu-container");
+
+    // Create test store, adding the getChildren() method required by ObjectStoreModel
+    var myStore = new Memory({
+		data: <?php echo $this->myJSON; ?>,
+        getChildren: function(object){
+            return this.query({parent: object.id});
+        },
+		getIconClass: function(/*dojo.store.Item*/ item, /*Boolean*/ opened){
+			//return myStore.getValue(item, 'leaf') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf";
+			//val = myStore.getValue(item, 'leaf');
+			if(item.leaf == "yes"){
+				return "dijitLeaf";
+			}
+			else{
+				return myStore.getValue(item, 'leaf') ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf";
+			}
+		},
+    });
+
+    // Create the model
+    var myModel = new ObjectStoreModel({
+        store: myStore,
+        query: {id: 'top'}
+    });
+
+    // Create the Tree.
+    var tree = new Tree({
+        model: myModel,
+		onClick: function(item){	var val = item.id;
+									request("/default/ajax/psssearch1/val/" + val).then(
+										function(text){
+											dom.byId("vw-content-container").innerHTML = text;
+											parser.parse();
+										},
+										function(error){
+											console.log("An error occurred: " + error);
+										}
+									);
+								}
+    }, "vw-sidemenu-container");
+    //tree.placeAt(win.body());
+    tree.startup();
+});
+	</script>
+<div id="view-content">
+	<div id="vw-sidemenu-container">
+    </div>
+    <div id="vw-content-container">
+    	<?php
+		if($this->flags->showPage == true)
+		{?>
+            <div id="vw-page-title">
+            <h1 class="vw-title"><?php echo $this->page->name; ?> [<?php echo $this->page->id; ?>]</h1>
+            </div>
+            <br /><br />
+            <div id="vw-cc-left">
+            <?php echo $this->partialLoop('pss/partials/_row-psssearch1-1.phtml', $this->pics); ?>
+            </div>
+            <div id="vw-cc-right">
+                <h2 class="vw-title">Page Caption:</h2>
+                <div id="page-caption">
+                <?php echo $this->page->description; ?>
+                </div>
+            </div>
+		<?php
+        }
+		else
+		{?>
+    	<p>Please select one of the options to the left.</p>   
+        <?php
+		}
+		?>
+    </div>
+</div>

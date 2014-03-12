@@ -1,0 +1,25 @@
+<style>
+.vw-div-1 { border:1px solid black; padding: 5px; margin: 5px; }
+</style>
+<div id="view-content">
+    <div style="float:left; width:45%;">
+		<?php 
+		$this->Instructions1('default_user_signup');
+		echo $this->form;
+		 ?>
+    </div>
+    <div style="float:left; width:45%;">
+    	<div style="overflow:auto; height: 200px;" class="vw-div-1">
+			<?php $this->Content_Privacy(); ?>
+        </div>
+    	<div style="overflow:auto; height: 200px;" class="vw-div-1">
+			<?php $this->Content_Tou(); ?>
+        </div>
+    </div>
+</div>
+<script>
+function callback_form_user_login_1()
+{
+  	window.location.href= "/index/index";
+}
+</script>

@@ -1,0 +1,110 @@
+<!--
+<script>
+FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    // the user is logged in and has authenticated your
+    // app, and response.authResponse supplies
+    // the user's ID, a valid access token, a signed
+    // request, and the time the access token 
+    // and signed request each expire
+	FB.api('/me?fields=picture,albums', function(response) {
+		  alert(response);
+		});
+  } else if (response.status === 'not_authorized') {
+	FB.api('/me?fields=picture,albums', function(response) {
+		  alert(response);
+		});
+    // the user is logged in to Facebook, 
+    // but has not authenticated your app
+  } else {
+    // the user isn't logged in to Facebook.
+  }
+ });
+</script>
+-->
+<!--
+<script>
+require(["dojo/store/JsonRest"], function(JsonRest){
+  var store = new JsonRest({
+    target: "/Rest/Pss/"
+  });
+
+  // Get an object by identity
+  store.get(3).then(function(item){
+    alert(item);
+  });
+  
+  store.query("foo=bar", {
+    start: 10,
+    count: 10,
+    sort: [
+      { attribute: "baz", descending: true }
+    ]
+  }).then(function(results){
+    // results should contain up to 10 items, sorted by "baz" in descending fashion
+  });
+  
+});
+</script>
+-->
+<div id="view-content">
+    <div data-dojo-type="dijit/layout/AccordionContainer" style="height: 600px; width: 100%;">
+        <div data-dojo-type="dijit/layout/ContentPane" title="WELCOME" selected="true">
+            <p class="big">
+            Welcome to my pet project...learning to build websites. 
+            </p>
+            <p class="big">
+            This website is divided into separate sections. Each section is a separate thought that came to me for material to use for this website.
+            </p>
+            <p class="big">
+            Right now there there is only one section to my website but I will make new sections when flashes of brilliance and creativity strikes me! 
+            </p>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" title="PET SOCIAL SPACE">
+            <div style="width: 70%; margin: 10px 20px 10px 20px;">
+				<?php echo $this->Content_Home_Welcome1('pss'); ?>
+                <br /><br />
+                <a id="vw-img-anchor"><img id="vw-img" width="400" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+/*
+console.log( "log Logged!");
+console.info( "info Logged!");
+console.warn( "warn Logged!");
+console.debug("debug Logged!");
+console.error("error Logged!");
+*/
+	require(["dojo/dom", "dojo/dom-attr", "dojo/dom-class","dojo/_base/fx", "dojo/on", "dojo/dom-style",
+				"mysa/utility/Globals", "mysa/layout/NavBar", "dojo/domReady!"],
+	function(dom, domAttr, domClass, fx, on, style,
+				Globals, NavBar){
+		var pics = <?php echo $this->pics; ?>;
+		var animateFunc = function(){
+			domAttr.set("vw-img", "src", "/images/pss/" + pics[i].id + "." + pics[i].extension);
+			domAttr.set("vw-img-anchor", "href", "/pss/search/id/" + pics[i].id);
+			domClass.remove("vw-img");
+			domClass.add("vw-img", "orientation-" + pics[i].orientation);
+			style.set("vw-img", "opacity", "0");
+			var fadeArgs = {
+				node: "vw-img",
+				duration: 5000,
+			};
+			fx.fadeIn(fadeArgs).play();
+		}
+		var i = 0;
+		function nextFrame() {
+			//if(i < pics.length) {
+				animateFunc();
+				i++;
+				i = i%pics.length;
+				// Continue the loop in 3s
+				setTimeout(nextFrame, 8000);
+			//}
+		}
+		// Start the loop
+		setTimeout(nextFrame, 0);
+	});
+</script>

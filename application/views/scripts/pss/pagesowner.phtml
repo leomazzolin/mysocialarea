@@ -1,0 +1,181 @@
+<style>
+#vw-sidemenu-container{ float:left; height: 600px; margin: 0 5px 0 5px; padding: 0 5px 0 0; }
+#vw-content-container{ float:left; width: 85%; margin: 0 5px 0 5px; padding: 5px; 
+						/*background-image:url(/images/pss/1-69-2.jpg); background-size: 200px 150px; background-repeat:repeat;*/ }
+#vw-page-title{ width: 30%; margin: auto; text-align:center;}
+#vw-picture-container{ width:100%; height: 400px; margin: 2px; padding: 5px; border: 1px solid black; overflow: auto;}
+#vw-picture{ float:left; width: 500px; margin: 10px 20px 10px 20px;}
+#editor{ float:left; width: 600px; margin: 10px 20px 10px 20px;}
+#vw-cc-left, #vw-cc-right{ float:left; width: 48%;}
+.vw-title{ padding: 2px 5px 2px 5px; border:1px solid black; background-color:#FFC;}
+</style>
+<script>
+require(["dojo/parser", "dijit/Editor", "dijit/form/Button"]);
+</script>
+<div id="view-content">
+	<div id="vw-sidemenu-container">
+    </div>
+    <div id="vw-content-container">
+    <div id="vw-cc-left"></div>
+    <div id="vw-cc-right">
+    </div>
+    </div>
+</div>
+<script>
+<?php 
+if($this->varInits->isPageRequest == true)
+{?>
+	var pics = <?php echo $this->pics; ?>;
+<?php
+}
+?>
+function navigate(uri){
+	window.location.href = uri;
+}
+
+require([	"mysa/controllers/Pss", "dojo/ready","dojo/on", "dojo/store/Memory", "dojo/dom-class", "dojo/request", "dijit/Menu", "dijit/MenuItem", "dijit/CheckedMenuItem", "dijit/MenuSeparator", "dijit/PopupMenuItem", "dijit/Editor", "dijit/_editor/plugins/AlwaysShowToolbar",
+			"dojo/json", "dojo/dom", "dijit/registry", "dojo/dom-attr", "dojo/dom-construct", "dijit/form/Button","dijit/form/FilteringSelect", "dojo/domReady!",
+		],
+function(Pss, ready, on, Memory, domClass, request, Menu, MenuItem, CheckedMenuItem, MenuSeparator, PopupMenuItem, Editor, AlwaysShowToolbar, JSON, dom, registry,  domAttr, domConstruct, Button, FilteringSelect){
+    ready(function(){
+		var pss = new Pss();
+		//pss.makeSideMenu();
+		//CALLBACK FUNCTIONS
+			var callback_1 = function(){
+						//parser.parse();
+						var widget = registry.byId("editor");
+						var id = page.id
+						var val = widget.get("value");
+						request.post("/ajax/pagesowner1",
+						{data: {
+									id: id,
+									val: val
+								},}
+						).then(
+							function(text){
+								dom.byId("result1").innerHTML = text;
+								registry.byId("saveCaption").set("disabled", "disabled");
+							},
+							function(error){
+								console.log("An error occurred: " + error);
+							}
+						);
+			};
+		//STORES
+		var stateStore = new Memory({
+			data: [
+				{name:"Original orientation", id: 0},
+				{name:"90 deg counterclockwise", id: 270},
+				{name:"90 deg clockwise", id: 90},
+				{name:"180 deg", id: 180},
+			]
+		});
+		//VARIABLES
+		var varInits = JSON.parse('<?php echo $this->json; ?>');
+		//varInits.isSignedIn = false;
+		if(varInits.isSignedIn === true)
+		{
+			domConstruct.create("h3", {	innerHTML: "Page Menu:" }, "vw-sidemenu-container");
+			var pages = JSON.parse('<?php echo $this->pages; ?>');
+			var div = domConstruct.create("div", {	id: "vw-sidemenu" }, "vw-sidemenu-container");
+			var pMenu;
+			pMenu = new Menu({
+			}, "vw-sidemenu");
+			pMenu.addChild(new MenuItem({
+				label: "New Pet Page",
+				onClick: "navigate('/pss/newpage')",
+			}));
+			var pSubMenu = new Menu();
+			for (i=0;i<pages.length;i++){
+				pSubMenu.addChild(new MenuItem({
+					label: pages[i].name + ' [' + pages[i].id + ']',
+					onClick: "window.location.href = '/pss/pages/user_id/" + pages[i].user_id + "/page_id/" + pages[i].id + "';",
+				}));
+			}
+			pMenu.addChild(new PopupMenuItem({
+				label: "Your Pet Pages:",
+				popup: pSubMenu
+			}));
+			if(varInits.isPageRequest === true)
+			{
+				var page = JSON.parse('<?php echo $this->page; ?>');
+				pMenu.addChild(new MenuSeparator());
+				pSubMenu = new Menu();
+				pSubMenu.addChild(new MenuItem({
+					label: 'Add a picture',
+					onClick: "navigate('/pss/addpicture/user_id/" + page.user_id + "/page_id/" + page.id + "')",
+				}));
+				pMenu.addChild(new PopupMenuItem({
+					label: "Manage this page",
+					popup: pSubMenu
+				}));
+			}
+			pMenu.startup();
+			//MAKE PAGETITLE
+			div = domConstruct.create("div", { id: "vw-page-title" }, "vw-content-container", "first");
+			var h1 = domConstruct.create("h1", {	innerHTML: page.name,
+													class: "vw-title" }, "vw-page-title");
+			div = domConstruct.create("div", { id: "vw-picture" }, "vw-cc-left");
+			if(varInits.isPageRequest === true)
+			{
+				for (i=0;i<pics.length;i++){
+					var input = new Array(); var filteringSelect = new Array();
+					input[i] = domConstruct.create("input", { id: "button_" + i }, "vw-picture");
+					filteringSelect[i] = new FilteringSelect({
+						id: "button_" + i,
+						name: "button_" + i,
+						style: "width: 200px;",
+						store: stateStore,
+						value: pics[i].orientation,
+						searchAttr: "name",
+						onChange: function (){	var val = this.value
+												var arr = this.id.split("_");
+												var i = arr[1];
+												pic_id = pics[i].id;
+												request("/ajax/index/id/"+ pic_id + "/val/" + val).then(
+													function(text){
+														domClass.remove("img_" + i);
+														domClass.add("img_" + i, "orientation-" + val);
+													},
+													function(error){
+														console.log("An error occurred: " + error);
+													}
+												);
+											}
+					}, input[i]);
+					var div = domConstruct.create("div", { style: "padding: 10px 0 10px 0;" }, "vw-picture");					
+					var img = domConstruct.create("img", { 	id: "img_" + i,
+															width: "500",
+															src: "/images/pss/" + pics[i].id + "." + pics[i].extension,
+															class: "orientation-" + pics[i].orientation,
+															}, div);
+				}
+				var div = domConstruct.create("div", { id: "editor" }, "vw-cc-right");
+				var editor = new Editor({
+								value: page.description,
+								height: "",
+								extraPlugins: [AlwaysShowToolbar],
+								onChange: function(){	dom.byId("result1").innerHTML = "";
+														registry.byId("saveCaption").set("disabled", false);
+														}
+													}, div);
+				editor.startup();
+				var button = domConstruct.create("button", { id: "saveCaption"  }, "vw-cc-right");
+				var myButton = new Button({
+									label: "Save",
+									type: "button",
+									disabled: "disabled",
+									}, "saveCaption");
+				var div = domConstruct.create("div", { id: "result1" }, "vw-cc-right");
+			}
+			
+			on(dom.byId("saveCaption"), "click", callback_1);
+		}
+		else
+		{
+			var p = domConstruct.create("p", { innerHTML: "Login" }, "vw-content-container");
+		}
+        
+    });
+});
+</script>

@@ -1,0 +1,32 @@
+<?php
+$this->loadEmailHeader();
+?>
+<div style="width:50em;">
+<p>
+This email is notify you that <b><?php echo $this->subject ?></b> for the year: <b><?php echo $this->year ?></b> is ready for enrolment. 
+You may enrol any time this course is in season but if you are interested in this course don't delay enrolment in case you forget to enrol 
+before any of the tests close and therefore give you a lower score at the end of the season! 
+We hope to see you playing! 
+</p>
+<br /><br />
+<p>
+DESCRIPTION:
+<br /><br />
+<?php
+echo $this->subject_info;
+?>
+</p>
+<br /><br />
+<p>
+SYLLABUS:
+<br /><br />
+<?php
+echo $this->syllabus;
+?>
+</p>
+<br /><br /><br />
+<p>
+For complete course details go to the following link:<br /><br />
+http://www.topdog-uofficepools.com/courselisting/detail/id/<?php echo $this->id ?>
+</p>
+</div>

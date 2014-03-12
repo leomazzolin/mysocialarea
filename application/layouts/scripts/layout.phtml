@@ -1,0 +1,391 @@
+<?php 
+echo $this->doctype();
+?>
+
+<html xmlns:fb="http://www.facebook.com/2008/fbml" >
+<head>
+<?php 
+echo $this->headTitle();
+echo $this->headMeta();
+?>
+
+<!--<meta property="og:url" content="http://mysocialarea.com<?php// echo $this->layout()->uri; ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>--><!--320-->
+<?php echo $this->headLink(); ?>
+
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dijit/themes/claro/claro.css" media="screen">
+
+<?php
+echo $this->headScript();
+?>
+
+<!------------------------------------------------------------------------------------------------------------>
+<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+<script type="text/javascript"> var RecaptchaOptions = { theme : 'white' };</script>
+<script>
+	var dojoConfig = {
+		has: {
+			"dojo-firebug": true,
+			"dojo-debug-messages": true
+		},
+		async: true,
+		parseOnLoad: true,
+		packages: [
+			{
+				name: "mysa",
+				location: "/mysa"
+			}
+		]
+	};
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
+</head>
+<div id="l-banner-ad" class="pos-absolute c-w-900" >
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Leaderboard -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px;"
+         data-ad-client="ca-pub-5786754406224671"
+         data-ad-slot="3878800237"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+<div id="content-ad-square" style="width: 260px; height: 260px; margin-left: 400px;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- square250 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:250px;height:250px"
+     data-ad-client="ca-pub-5786754406224671"
+     data-ad-slot="1859787035"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div id="l-social-media-banner" class="pos-absolute" style="margin: 0 0 0 100px;">
+     <div class="fb-like" style="margin: 0 10px 0 0; padding:0;" data-href="http://www.mysocialarea.com" data-send="true" data-layout="button_count" data-width="150" data-show-faces=true data-font="arial"></div>&nbsp;&nbsp;&nbsp;
+     <a class="twitter-follow-button" href="https://twitter.com/mysocialarea" data-show-count=false data-lang="en" style="display:inline;">Follow @MySA</a>
+     <div class="g-plusone" data-size="medium"></div>
+</div>
+
+<div id="l-fb" style="width: 500px; height: 600px; margin-left: 300px;">
+	<div class="fb-like-box" data-href="https://www.facebook.com/mysocialarea" data-width="500" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
+</div>
+
+<!--
+<div id="l-twitter" style="width: 500px; height: 620px; margin-left: 300px;">
+    <div style="width: 500px;"><a class="twitter-timeline"  href="https://twitter.com/mysocialarea"  data-widget-id="381497177127649280" data-chrome="transparent">Tweets by @MySocialArea</a></div>
+</div>
+-->
+
+<!--
+<div id="fb-comment" style="margin: 20px 20px 20px 200px; height: 600px; width: 570px; overflow: auto; background-color: #FFFFFF;" class="fb-comments" data-href="http://mysocialarea.com" data-numposts="5" data-colorscheme="light"></div>
+-->
+
+<div id="vw-disqus" class="c-w-720" style="margin:  40px auto 40px auto; padding: 20px; height: 2000px; overflow: auto; background-color: #FF9;">
+	<p style="background-color: #FFFFFF; padding: 5px;">Do you disagree with my conclusion?<br />Do you have some evidence to change the conclusion?<br />
+    Then feel free to discuss this theory by commenting below. Your input will be greatly appreciated.</p>
+    <br /><br />
+    <div id="disqus_thread">
+    </div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'mysocialarea'; // required: replace example with your forum shortname
+    
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<body id="l-body" class="claro">
+<div id="fb-root"></div>
+<script src="/scripts/facebook/startup.js"></script>
+<?php 
+	if($this->layout()->showrecaptcha == true){
+		$this->Recaptcha();
+	}
+?>
+
+</body>    
+</html>
+<script type="text/javascript">
+require(["dojo/ready", "dojo/dom-construct", "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-geometry", "dojo/query", "dojo/json", "dojo/cookie", "dojo/parser",
+			"mysa/helpers/Flash", "mysa/layout/NavBar", "mysa/Director",
+			"mysa/layout/containers/PageLayout", "mysa/layout/containers/Logo", "mysa/layout/containers/Auth", "mysa/layout/containers/SocialMediaBanner", "mysa/layout/containers/Title", "mysa/layout/containers/MainMenu", "mysa/layout/containers/SectionMenu", "mysa/layout/containers/Content", "mysa/layout/containers/SocialMedia", "mysa/layout/containers/Footer",
+			"dojo/NodeList-data", "dojo/NodeList-dom", "dojo/NodeList-fx", 
+			"dojo/domReady!"],
+function(ready, domConstruct, domClass, domStyle, domAttr, domGeom, query, JSON, cookie, parser,
+			Flash, NavBar, Director,
+			PageLayout, Logo, Auth, SocialMediaBanner, Title, MainMenu, SectionMenu, Content, SocialMedia, Footer){
+	ready(function(){
+		//parser.parse();
+		var payloadLayout = <?php echo $this->layout()->payloadLayout; ?>;
+		var payloadView = <?php echo $this->layout()->_viewPayload; ?>;
+		
+		handleDisqus(payloadLayout.params);
+		
+		switch(payloadLayout.params.module){
+			case "default":
+				//MAKE LIST FOR CONTAINER DIMENSIONS
+				var contDims = new Object();
+				var pageStyle = new Object();
+				pageStyle.width = "1080px";
+				//INST PAGE LAYOUT
+				var page = new PageLayout(screen);
+				domStyle.set(page.get(), { left: "0px", top: "0px", width: pageStyle.width});
+				contDims.page = page.getDim();
+				//INST LOGO
+				var logo = new Logo();
+				domStyle.set(logo.get(), {left: "0px", top: "0px"});
+				contDims.logo = logo.getDim();
+				//INST AUTH
+				var auth = new Auth(payloadLayout.identity);
+				domStyle.set(auth.get(), {left: "0px", top: contDims.logo.b + "px"});
+				contDims.auth = auth.getDim();
+				//INST SM BANNER
+				var left = chooseLeft( new Array( contDims.logo, contDims.auth ) );
+
+				domConstruct.place("l-social-media-banner", "l-page-layout");
+				domStyle.set("l-social-media-banner", {
+													left: left + "px",
+													top: "5px",
+													});
+				//SET LOCATION OF BANNER AD
+				if(boolShowAds(payloadLayout.params) == true){
+					domStyle.set("l-banner-ad", {left: left + "px", top: contDims.logo.b + 5 + "px"});
+					domConstruct.place("l-banner-ad", "l-page-layout");
+					var computedStyle = domStyle.getComputedStyle("l-banner-ad");
+					contDims.bannerAd = domGeom.getMarginBox("l-banner-ad", computedStyle);
+					contDims.bannerAd.r = contDims.bannerAd.l + contDims.bannerAd.w;
+					contDims.bannerAd.b = contDims.bannerAd.t + contDims.bannerAd.h;
+					var top = chooseTop( new Array( contDims.logo, contDims.auth, contDims.bannerAd) );
+				}
+				else{
+					domConstruct.destroy("l-banner-ad");
+					var top = chooseTop( new Array( contDims.logo, contDims.auth) );
+				}
+				//INST MAIN MENU
+				var nav = new MainMenu(payloadLayout.params.module);
+				domStyle.set(nav.get(), { left: 0 + "px", top: top + "px"});
+				contDims.nav = nav.getDim();
+				var DimInputForTitle = contDims.nav;
+				//alert(JSON.stringify(payloadLayout.params));
+				var ShowSectionMenu = nav.ShowSectionMenu(payloadLayout.params);
+				//INST SECTION MENU IF REQUIERED
+				if(ShowSectionMenu != false){
+					var sectMenu = new SectionMenu(ShowSectionMenu);
+					domStyle.set(sectMenu.get(), { left: contDims.nav.r + "px", top: top + "px"});
+					contDims.sectMenu = sectMenu.getDim();
+					DimInputForTitle = contDims.sectMenu;
+				}
+				//INST TITLE BAR
+				var title = new Title();
+				domAttr.set(title.get(), "innerHTML", title.makeTitle(payloadLayout.params));
+				if(ShowSectionMenu > 0){
+					domClass.add(title.get(), "c-w-720");
+				}
+				else{
+					domClass.add(title.get(), "c-w-900");
+				}
+				domStyle.set(title.get(), {
+											left: DimInputForTitle.r + 5 + "px",
+											top: top + "px",
+											//width: contDims.page.r + "px",
+											});
+				contDims.title = title.getDim();
+				//INST CONTENT CONTAINER
+				var top = chooseTop( new Array( contDims.nav, contDims.title) );
+				var divMsgHolder = domConstruct.create("div",{ id: "l-message-holder"}, "l-page-layout");
+				domClass.add(divMsgHolder, "pos-absolute");
+				domStyle.set(divMsgHolder, {
+											left: 0 + "px",
+											top: top + "px",
+											zIndex: 1,
+											});	
+				
+				var content = new Content();
+				domStyle.set(content.get(), {
+											left: 0 + "px",
+											top: top + "px",
+											width: contDims.page.w + "px",
+											});
+				var D = new Director( payloadLayout, payloadView );
+				domConstruct.place(D.get(), content.get());
+				contDims.content = content.getDim();
+				domStyle.set(content.get(), "height", contDims.content.h + 100 + "px");
+				contDims.content = content.getDim();
+				//INST SM CONTAINER
+				var sm = new SocialMedia();
+				domStyle.set(sm.get(), {top: contDims.content.b + "px"});
+				if(boolShowAds(payloadLayout.params) == true){
+					domConstruct.place("content-ad-square", sm.get());
+					domStyle.set("content-ad-square", {
+														left: 0 + "px",
+														top: contDims.content.b + 5 + "px",
+														});
+					var computedStyle = domStyle.getComputedStyle("content-ad-square");
+					contDims.contentAd = domGeom.getMarginExtents("content-ad-square", computedStyle);
+				}
+				else{
+					domConstruct.destroy("content-ad-square");
+				}
+				domConstruct.place("l-fb", sm.get());
+				domStyle.set("l-fb", {
+											top: contDims.content.b + contDims.contentAd.h + 10 + "px",
+											//left: contDims.content.l + 5 + "px",
+											});
+				var computedStyle = domStyle.getComputedStyle("l-fb");
+				contDims.fb = domGeom.getMarginExtents("l-fb", computedStyle);
+				contDims.sm = sm.getDim();
+				/*
+				domConstruct.place("l-twitter", sm.get());
+				domStyle.set("l-twitter", {
+											top: contDims.content.b + contDims.contentAd.h + contDims.fb.h + 10 + "px",
+											//left: contDims.content.l + 5 + "px",
+											});
+				var computedStyle = domStyle.getComputedStyle("l-twitter");
+				contDims.twitter = domGeom.getMarginExtents("l-twitter", computedStyle);
+				contDims.sm = sm.getDim();
+				*/
+				//INST FOOTER
+				var footer = new Footer();
+				//domConstruct.place("fb-comment", footer.get());
+				domStyle.set(footer.get(), {
+											left: 0 + "px",
+											top: contDims.sm.b + "px",
+											width: contDims.page.w + "px",
+											});
+				contDims.footer = footer.getDim();
+				//RESET FINAL PAG LYOUT LOCATION
+				page.setDim(contDims);
+				break;
+			case "admin":
+				domConstruct.destroy("l-banner-ad");
+				domConstruct.destroy("content-ad-square");
+				domConstruct.destroy("l-fb");
+				domConstruct.destroy("l-twitter");
+				domConstruct.destroy("fb-comment");
+				domConstruct.destroy("l-social-media-banner");
+
+				//MAKE LIST FOR CONTAINER DIMENSIONS
+				var contDims = new Object();
+				var pageStyle = new Object();
+				pageStyle.width = "1080px";
+				//INST PAGE LAYOUT
+				var page = new PageLayout(screen);
+				domStyle.set(page.get(), { left: "0px", top: "0px", width: pageStyle.width});
+				contDims.page = page.getDim();
+				//INST AUTH
+				var nav = new MainMenu(payloadLayout.params.module);
+				//domStyle.set(nav.get(), { left: 0 + "px", top: top + 5 + "px"});
+				contDims.nav = nav.getDim();
+				var DimInputForTitle = contDims.nav;
+				var ShowSectionMenu = nav.ShowSectionMenu(payloadLayout.params);
+				//INST SECTION MENU IF REQUIERED
+				if(ShowSectionMenu != false){
+					var sectMenu = new SectionMenu(ShowSectionMenu);
+					//domStyle.set(sectMenu.get(), { left: contDims.nav.r + "px", top: top + 5 + "px"});
+					contDims.sectMenu = sectMenu.getDim();
+					DimInputForTitle = contDims.sectMenu;
+				}
+				//INST TITLE BAR
+				var title = new Title();
+				if(ShowSectionMenu == true){
+					domClass.add(title, "c-w-720");
+				}
+				else{
+					domClass.add(title, "c-w-900");
+				}
+				domAttr.set(title.get(), "innerHTML", title.makeTitle(payloadLayout.params));
+				domStyle.set(title.get(), {
+											left: DimInputForTitle.r + "px",
+											top: top + "px",
+											//width: contDims.page.r - (DimInputForTitle.r + 15) + "px",
+											});
+				contDims.title = title.getDim();
+				//INST CONTENT CONTAINER
+				var top = chooseTop( new Array( contDims.nav, contDims.title) );
+				var divMsgHolder = domConstruct.create("div",{ id: "l-message-holder"}, "l-page-layout");
+				domClass.add(divMsgHolder, "pos-absolute");
+				domStyle.set(divMsgHolder, {
+											left: 0 + "px",
+											top: top + "px",
+											zIndex: 1,
+											});	
+				var content = new Content();
+				domStyle.set(content.get(), {
+											left: 0 + "px",
+											top: top + "px",
+											width: contDims.page.w + "px",
+											});
+				var D = new Director( payloadLayout, payloadView );
+				domConstruct.place(D.get(), content.get());
+				contDims.content = content.getDim();
+				domStyle.set(content.get(), "height", contDims.content.h + 200 + "px");
+				contDims.content = content.getDim();
+				//RESET FINAL PAG LYOUT LOCATION
+				page.setDim(contDims);
+				break;
+			default:
+				break;
+		}
+		
+		function chooseLeft(arrObj){
+			var left = 0;
+			for( var i = 0; i < arrObj.length; i++ ){
+				if(arrObj[i].r > left){
+					left = arrObj[i].r;
+				}
+			}
+			return left;
+		}
+
+		function handleDisqus(objParams){
+			if(!(objParams.module == "default" && objParams.controller == "sheldonsays" && objParams.action == "theories"	&& objParams.val != null)){
+				domConstruct.destroy("vw-disqus");
+			}
+			else{
+			}
+		}
+
+		function chooseTop(arrObj){
+			var top = 0;
+			for( var i = 0; i < arrObj.length; i++ ){
+				if(arrObj[i].b > top){
+					top = arrObj[i].b;
+				}
+			}
+			return top;
+		}
+
+		function boolShowAds(objParams){
+			var boolShowAds = true;
+			if(objParams.module == 'admin'){
+				boolShowAds = false;
+			}
+			if(objParams.module == 'default' && objParams.controller == 'user' && (objParams.action == 'index' || objParams.action == 'email' || objParams.action == 'personal' || objParams.action == 'password')){
+				boolShowAds = false;
+			}
+			return boolShowAds;
+		}
+		<?php
+		if ($this->Flashmsg() != NULL):
+		?>
+
+			var flash = new Flash(<?php echo $this->Flashmsg(); ?>, payloadLayout);
+			flash.display();
+		<?php endif ?>
+
+	});
+});
+</script>
+<script src="/scripts/google/plusone.js" type="text/javascript"></script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

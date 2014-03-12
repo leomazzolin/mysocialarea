@@ -1,0 +1,46 @@
+<a href="/mlse/index" class="menu-item">MLSE SUCKS HOME</a><a href="/mlse/facts" class="menu-item">Facts</a><a href="/mlse/feedback" class="menu-item">Feedback</a>
+<div id="view-content">
+    <table width="200">
+      <tr>
+        <td><label>
+          <input type="radio" name="optComment" value="fb" id="optComment_0" checked="checked" onclick="getFacebook()" />
+          Facebook</label></td>
+        <td><label>
+          <input type="radio" name="optComment" value="twtr" id="optComment_1" onclick="getTwitter()" />
+          Twitter</label></td>
+        <td><label>
+          <input type="radio" name="optComment" value="twtr" id="optComment_2" onclick="getDisqus()" />
+          Disqus</label></td>
+      </tr>
+    </table>
+    <br />
+    <div style="width: 70%;">
+        <p>
+        Ok...here&apos;s your chance to let loose. After all the decades of mediocrity to down right horrible product that MLSE 
+        has given to the good people of Toronto here&apos;s your chance to vent out all your frustrations by giving your victim 
+        impact statement.
+        </p>
+        <p>
+        Don&apos;t hold anything back either.
+        </p>
+    </div>
+    <br />
+    <div id="vw-ajax-content-1">
+        <div class="fb-comments" data-href="http://mysocialarea.com" data-width="600" data-num-posts="10"></div>
+    </div>
+</div>
+<script type="text/javascript">
+function getFacebook()
+{
+	$("#vw-ajax-content-1").load( "/ajaxmlseletemhaveit1/val/fb");
+}
+
+function getTwitter()
+{
+	$("#vw-ajax-content-1").load( "/ajaxmlseletemhaveit1/val/twtr");
+}
+function getDisqus()
+{
+	$("#vw-ajax-content-1").load( "/ajaxmlseletemhaveit1/val/disqus");
+}
+</script>

@@ -1,0 +1,25 @@
+<style>
+#vw-sidemenu-container{ float:left; height: 600px; margin: 0 5px 0 5px; padding: 0 5px 0 0; border-right: 1px solid black; }
+#vw-content-container{ float:left; width: 85%; margin: 0 5px 0 5px; padding: 5px; 
+						/*background-image:url(/images/pss/1-69-2.jpg); background-size: 200px 150px; background-repeat:repeat;*/ }
+#vw-page-title{ width: 30%; margin: auto; text-align:center;}
+#vw-picture-container{ width:100%; height: 400px; margin: 2px; padding: 5px; border: 1px solid black; overflow: auto;}
+#vw-picture{ float:left; width: 500px; margin: 10px 20px 10px 20px; transform:translateY(0px) rotate(0deg); }
+#editor{ float:left; width: 600px; margin: 10px 20px 10px 20px; background-color: yellow;}
+.vw-title{ padding: 2px 5px 2px 5px; border:1px solid black; background-color:#FFC;}
+</style>
+<div id="view-content">
+	<div id="vw-sidemenu-container">
+    </div>
+    <div id="vw-content-container">
+    	<?php if($this->varInits->isPageRequest == false)
+		{?>
+        	<div id="editor" data-dojo-type='dijit/Editor'></div>
+        <?php
+		}?>
+        <!--<button id="addpicture" type="button"></button>-->
+    </div>
+</div>
+<?php
+include($this->scriptpath);
+ ?>

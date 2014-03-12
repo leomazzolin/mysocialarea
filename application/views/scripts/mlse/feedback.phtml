@@ -1,0 +1,46 @@
+<div id="view-content">
+    <canvas id="cv" width="800" height="600"></canvas>
+	<img id="img" width="100px" src="/images/dogworld/header.jpg">
+</div>
+<script>
+var ctx = $('#cv').get(0).getContext('2d');
+ctx.setTransform(1,0,0,.75,0,0);
+
+var img = new Image();
+
+img.src = '/images/dogworld/IMG_0001.JPG';
+
+img.onload = function() {
+    ctx.drawImage(img, 0, 0, 800, 800);
+
+    var gradient = ctx.createRadialGradient(400, 300*4/3, 380, 400, 300*4/3, 400);
+
+    gradient.addColorStop(0, 'rgba(255,255,255,0)');
+    gradient.addColorStop(1, 'rgba(255,255,255,1)');
+
+    ctx.fillStyle = gradient;
+
+    ctx.fillRect(0, 0, 800, 800);
+	ctx.toDataUrl();
+};
+
+$(document).ready(function() {
+	$('#dimensions').html($('#img').width() + ' by ' + $('#img').height());
+	$('#img').width(100);
+});
+
+$('#img').mouseover(
+	function(){
+		$(this).width(600);
+		$('#dimensions').html($('#img').width() + ' by ' + $('#img').height());
+	}
+);
+
+$('#img').mouseout(
+	function(){
+		$(this).width(100);
+		$('#dimensions').html($('#img').width() + ' by ' + $('#img').height());
+	}
+);
+
+</script>

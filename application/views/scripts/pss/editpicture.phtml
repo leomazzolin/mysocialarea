@@ -1,0 +1,75 @@
+<style>
+#view-content{ margin: auto; width: 500px;}
+</style>
+<div id="view-content">
+<button id="button" type="button">hello</button>
+<h3>Picture Orientation:</h3>
+<p>
+  <label>
+    <input type="radio" name="picture-orientation" value="0" id="picture-orientation_0" <?php if($this->picture->picture_data->_getPictureDataItem($this->pictureNumber, 'orientation') == 0){ ?> checked="checked" <?php  } ?>  />
+    Original</label>
+  <br />
+  <label>
+    <input type="radio" name="picture-orientation" value="270" id="picture-orientation_1" <?php if($this->picture->picture_data->_getPictureDataItem($this->pictureNumber, 'orientation') == 90){ ?> checked="checked" <?php  } ?>/>
+    Rotate 90&deg; counterclockwise</label>
+  <br />
+  <label>
+    <input type="radio" name="picture-orientation" value="90" id="picture-orientation_2" <?php if($this->picture->picture_data->_getPictureDataItem($this->pictureNumber, 'orientation') == 270){ ?> checked="checked" <?php  } ?> />
+    Rotate 90&deg; clockwise</label>
+  <br />
+  <label>
+    <input type="radio" name="picture-orientation" value="180" id="picture-orientation_3" <?php if($this->picture->picture_data->_getPictureDataItem($this->pictureNumber, 'orientation') == 180){ ?> checked="checked" <?php  } ?> />
+    Rotate 180&deg;</label>
+  <br />
+</p>
+<div id="vw-caption"></div>
+<canvas id="cv" width="400" height="300"></canvas>
+<br /><br />
+<?php //echo $this->caption; ?>
+</div>
+<script>
+dojo.ready(function(){
+	var myradio = {
+	onClick: function(evt){
+			// Using dojo.xhrGet, as very little information is being sent
+			dojo.xhrGet({
+				// The URL of the request
+				url: "/ajax/psspages1",
+				// The success callback with result from server
+				load: function(newContent) {
+					dojo.byId("vw-caption").innerHTML = newContent;
+					//dojo.parser.parse("editor1");
+				},
+				// The error handler
+				error: function() {
+					dojo.byId("vw-caption").innerHTML = 'error';
+				}
+			});
+		}
+	};
+	dojo.connect(dojo.byId("picture-orientation_0"), "onclick", myradio, "onClick");
+	dojo.connect(dojo.byId("picture-orientation_1"), "onclick", myradio, "onClick");
+	dojo.connect(dojo.byId("picture-orientation_2"), "onclick", myradio, "onClick");
+	dojo.connect(dojo.byId("picture-orientation_3"), "onclick", myradio, "onClick");
+});
+/*
+var canvas = document.getElementById('cv');  
+    var ctx = canvas.getContext('2d');
+
+    var img = new Image();   // Create new Image object
+   	img.src = '/images/pss/1-70-1.jpg';
+	 // Set source path // set img src
+    img.onload = function(e){
+		var mdlDraw = new DrawImage1(canvas, img);
+		var rotation = <?php //echo $this->picture->picture_data->_getPictureDataItem($this->pictureNumber, 'orientation'); ?>;
+		mdlDraw.setRotation(rotation);
+		mdlDraw.setCanvasDimensions();
+		ctx.translate(mdlDraw.getTranslateX(),mdlDraw.getTranslateY()); // set canvas context to center
+		ctx.rotate(Math.PI/180*mdlDraw.getRotation());
+		ctx.drawImage(img,0,0, mdlDraw.getCanvasWidth(), mdlDraw.getCanvasHeight());
+		//alert( mdlDraw.getTranslateX() + ' / ' + mdlDraw.getTranslateY());
+    }
+*/
+
+
+</script>
